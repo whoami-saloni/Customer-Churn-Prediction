@@ -1,0 +1,39 @@
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+      - data/raw/churn.csv
+      - src/preprocess.py
+    outs:
+      - data/processed/data.csv
+
+        # optional folder for plots
+
+  segment:
+    cmd: python src/segment.py
+    deps:
+      - data/processed/data.csv
+      - src/segment.py
+    outs:
+      - data/segmented/segmented_data.csv
+
+  train:
+    cmd: python src/train_model.py
+    deps:
+      - data/segmented/segmented_data.csv
+      - src/train_model.py
+    outs:
+      - models/churn_model.pkl
+      - data/test/X_test.csv
+      - data/test/y_test.csv
+
+  evaluate:
+    cmd: python src/evaluate_model.py
+    deps:
+      - models/churn_model.pkl
+      - data/test/X_test.csv
+      - data/test/y_test.csv
+      - src/evaluate_model.py
+    outs:
+      - outputs/metrics.json
+      - outputs/roc_curve.png
