@@ -1,11 +1,11 @@
 # src/main.py
 
 import os
-from preprocess import preprocess_data
+from src.preprocess import preprocess_data
 
-from segment import segments
-from train_model import train
-from evaluate_model import evaluate
+from src.segment import segments
+from src.train_model import train
+from src.evaluate_model import evaluate
 
 def run_pipeline():
     print("\n🔧 Step 1: Preprocessing data...")
