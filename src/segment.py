@@ -1,40 +1,47 @@
+import os
+import logging
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
-import os
 
-# Load processed data
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 def segments():
-    df = pd.read_csv("Data/processed/data.csv")
+    # Load processed data
+    processed_path = "Data/processed/data.csv"
+    if not os.path.exists(processed_path):
+        logging.error(f"❌ Processed data not found at {processed_path}")
+        return
 
-# Select features for segmentation
+    df = pd.read_csv(processed_path)
+    logging.info(f"📥 Loaded processed data with {df.shape[0]} rows.")
+
+    # Select features for segmentation
     features = ['tenure', 'MonthlyCharges']
     X = df[features].copy()
 
-# Scale features
+    # Scale features
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
+    logging.info("🔄 Scaled features for clustering.")
 
-# Run KMeans clustering
-    kmeans = KMeans(n_clusters=4, random_state=42)
+    # Run KMeans clustering
+    kmeans = KMeans(n_clusters=4, random_state=42, n_init=10)
     df['Segment'] = kmeans.fit_predict(X_scaled)
+    logging.info("🤖 KMeans clustering completed.")
 
-# Add human-readable segment label (optional)
-    segment_labels = {
-    0: 'Low Tenure + Low Charges',
-    1: 'High Tenure + High Charges',
-    2: 'Low Tenure + High Charges',
-    3: 'High Tenure + Low Charges'
-    }
-# You can reorder based on mean values of clusters later if needed
-# For now, leave numeric
-
-# Optional: flag high-value customers
+    # Optional: Flag high-value customers
     df['HighValue'] = df['MonthlyCharges'] > df['MonthlyCharges'].quantile(0.75)
 
-# Save segmented data
+    # Save segmented data
     os.makedirs("Data/segmented", exist_ok=True)
-    df.to_csv("Data/segmented/segmented_data.csv", index=False)
-    return
+    segmented_path = "Data/segmented/segmented_data.csv"
+    df.to_csv(segmented_path, index=False)
+    logging.info(f"✅ Customer segmentation completed and saved to: {segmented_path}")
 
-#print("✅ Customer segmentation completed and saved.")
+    return df  # Optional return
+
+# Uncomment for standalone run
+# if __name__ == "__main__":
+#     segments()

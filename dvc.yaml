@@ -2,10 +2,10 @@ stages:
   preprocess:
     cmd: python src/preprocess.py
     deps:
-      - data/raw/churn.csv
+      - Data/Churn.csv
       - src/preprocess.py
     outs:
-      - data/processed/data.csv
+      - Data/processed/data.csv
 
         # optional folder for plots
 

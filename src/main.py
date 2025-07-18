@@ -2,7 +2,7 @@
 
 import os
 from preprocess import preprocess_data
-from eda import perform_eda
+
 from segment import segments
 from train_model import train
 from evaluate_model import evaluate
