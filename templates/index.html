@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Churn Analysis</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(to right, #e3f2fd, #ffffff);
+            color: #333;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 0 auto 20px auto;
+            font-size: 14px;
+        }
+
+        input[type="submit"], .btn-nav {
+            padding: 12px 20px;
+            margin: 10px 10px 0 0;
+            border: none;
+            border-radius: 6px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-nav {
+            background-color: #28a745;
+        }
+
+        input[type="submit"]:hover, .btn-nav:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-nav:hover {
+            background-color: #218838;
+        }
+
+        hr {
+            margin: 30px 0;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            input[type="submit"], .btn-nav {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📤 Upload Churn Dataset (CSV)</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="dataset" accept=".csv" required>
+            <input type="submit" value="Upload and Analyze">
+        </form>
+
+        <hr>
+
+        <button class="btn-nav" onclick="location.href='/dashboard'">📊 Show EDA Dashboard</button>
+        <button class="btn-nav" onclick="location.href='/evaluation'">📈 Show Model Evaluation</button>
+    </div>
+</body>
+</html>

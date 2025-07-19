@@ -5,6 +5,8 @@ import json
 import joblib
 import logging
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')  # Use non-GUI backend
 import matplotlib.pyplot as plt
 from sklearn.metrics import (
     accuracy_score, f1_score, roc_auc_score,
@@ -18,7 +20,9 @@ def evaluate():
     model_path = "models/churn_model.pkl"
     x_test_path = "Data/test/X_test.csv"
     y_test_path = "Data/test/y_test.csv"
-    output_dir = "outputs"
+    output_dir = "static/eda"
+    # Create directory for saving plots
+    #os.makedirs(output_dir, exist_ok=True)
 
     # Check file existence
     if not all(os.path.exists(p) for p in [model_path, x_test_path, y_test_path]):
@@ -47,7 +51,7 @@ def evaluate():
         "roc_auc": round(roc_auc, 4)
     }
 
-    os.makedirs(output_dir, exist_ok=True)
+    #os.makedirs(output_dir, exist_ok=True)
 
     # Save metrics
     with open(os.path.join(output_dir, "metrics.json"), "w") as f:

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>📈 Model Evaluation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f0f4ff, #ffffff);
+            margin: 0;
+            padding: 40px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        li {
+            background: #f9f9f9;
+            margin: 10px 0;
+            padding: 12px 20px;
+            border-left: 6px solid #4CAF50;
+            border-radius: 6px;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            li {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📊 Model Evaluation Metrics</h2>
+        <ul>
+            <li><b>Accuracy:</b> {{ metrics.accuracy }}</li>
+            <li><b>F1 Score:</b> {{ metrics.f1_score }}</li>
+            <li><b>ROC AUC:</b> {{ metrics.roc_auc }}</li>
+        </ul>
+
+        <h2>📈 ROC AUC Curve</h2>
+        <img src="{{ url_for('static', filename='eda/roc_curve.png') }}" alt="ROC Curve">
+    </div>
+</body>
+</html>
