@@ -46,6 +46,7 @@ def dashboard():
 
 @app.route("/evaluation")
 def evaluation():
+    os.makedirs('static/eda', exist_ok=True) 
     metrics_path = "static/eda/metrics.json"  # Adjust path if needed
     try:
         with open(metrics_path) as f:
