@@ -8,9 +8,9 @@ from src.main import run_pipeline  # Update this to your actual function/module
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "Data"
-
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure the upload folder exists
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+eda_dir = os.makedirs("static/eda", exist_ok=True)
 
 
 
@@ -37,7 +37,7 @@ def index():
 
 @app.route("/dashboard")
 def dashboard():
-    eda_dir = os.path.join("static", "eda")
+    eda_dir = os.makedirs("static/eda", exist_ok=True)
     eda_images = [
         f"eda/{img}" for img in os.listdir(eda_dir)
         if img.endswith(".png") and img != "roc_curve.png"
@@ -46,7 +46,8 @@ def dashboard():
 
 @app.route("/evaluation")
 def evaluation():
-    os.makedirs('static/eda', exist_ok=True) 
+     
+
     metrics_path = "static/eda/metrics.json"  # Adjust path if needed
     try:
         with open(metrics_path) as f:
