@@ -7,37 +7,42 @@ import matplotlib.pyplot as plt
 from src.main import run_pipeline  # Update this to your actual function/module
 
 app = Flask(__name__)
-UPLOAD_FOLDER = "Data"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure the upload folder exists
+UPLOAD_FOLDER = 'Data'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-eda_dir = os.makedirs("static/eda", exist_ok=True)
-
-
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        try:
+        #try:
+            # ✅ Ensure upload directory exists
+            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
             uploaded_file = request.files.get("dataset")
             if uploaded_file and uploaded_file.filename.endswith(".csv"):
                 uploaded_path = os.path.join(app.config['UPLOAD_FOLDER'], "churn.csv")
+                print(f"Uploading file to {uploaded_path}")
                 uploaded_file.save(uploaded_path)
-                print("✅ File uploaded successfully.", uploaded_path)
+                print("✅ File uploaded successfully.")
 
-                run_pipeline()  # ← your full flow runs here
+                try:
+                    run_pipeline()
+                except Exception as pipeline_error:
+                    print(f"❌ Pipeline failed: {pipeline_error}")
+                    return "⚠️ Pipeline execution failed", 500
 
-                return redirect(url_for("index"))
+                return redirect(url_for("index", success="true"))
             else:
                 return "❌ Only .csv files are accepted", 400
-        except Exception as e:
-            print(f"❌ Exception during POST: {e}")
-            return "⚠️ Internal server error", 500
-    return render_template("index.html")
+        #except Exception as e:
+            #print(f"❌ Exception during POST: {e}")
+            #return "⚠️ Internal server error", 500
 
-
+    # Handle success flag
+    success = request.args.get("success") == "true"
+    return render_template("index.html", success=success)
 @app.route("/dashboard")
 def dashboard():
-    eda_dir = os.makedirs("static/eda", exist_ok=True)
+    eda_dir = "static/eda"
     eda_images = [
         f"eda/{img}" for img in os.listdir(eda_dir)
         if img.endswith(".png") and img != "roc_curve.png"

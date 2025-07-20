@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Customer Churn Analysis</title>
+    <title>Smart Customer Churn Predictor</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -10,6 +10,13 @@
             padding: 40px;
             background: linear-gradient(to right, #e3f2fd, #ffffff);
             color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 10px;
         }
 
         h2 {
@@ -61,6 +68,12 @@
             background-color: #218838;
         }
 
+        .success-msg {
+            color: green;
+            font-weight: 600;
+            margin: 10px 0 20px 0;
+        }
+
         hr {
             margin: 30px 0;
             border: none;
@@ -80,8 +93,15 @@
     </style>
 </head>
 <body>
+    <h1>🔍 Smart Customer Churn Predictor</h1>
+
     <div class="container">
         <h2>📤 Upload Churn Dataset (CSV)</h2>
+
+        <!-- Display success message if present in URL -->
+        <div class="success-msg" id="successMessage" style="display: none;">
+            ✅ Data uploaded successfully!
+        </div>
 
         <form method="POST" enctype="multipart/form-data">
             <input type="file" name="dataset" accept=".csv" required>
@@ -93,5 +113,13 @@
         <button class="btn-nav" onclick="location.href='/dashboard'">📊 Show EDA Dashboard</button>
         <button class="btn-nav" onclick="location.href='/evaluation'">📈 Show Model Evaluation</button>
     </div>
+
+    <script>
+        // Show success message if ?success=true is in URL
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('success') === 'true') {
+            document.getElementById('successMessage').style.display = 'block';
+        }
+    </script>
 </body>
 </html>

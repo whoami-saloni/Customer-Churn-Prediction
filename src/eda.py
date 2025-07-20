@@ -13,8 +13,11 @@ sns.set(style="whitegrid")
 def eda():
     data_path="Data/Churn.csv"
     output_dir = "static/eda"
+    os.makedirs(output_dir, exist_ok=True)  # Ensure output directory exists
     # Create directory for saving plots
-    #os.makedirs(output_dir, exist_ok=True)
+    if not os.path.exists(data_path):
+        print(f"❌ Data file not found at {data_path}")
+        return
 
     # Load the dataset
     df = pd.read_csv(data_path)
