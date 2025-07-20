@@ -19,7 +19,7 @@ This project leverages telecom customer data to predict churn using an XGBoost m
 - 🌐 Flask web interface for data upload, EDA, and evaluation  
 - 🐳 Dockerized for reproducibility  
 - 📁 DVC for data and model versioning  
-- ☁️ Deployed via [Render](https://render.com)
+- ☁️ Deployed via Render
 
 ---
 
