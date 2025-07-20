@@ -9,7 +9,8 @@ from src.main import run_pipeline  # Update this to your actual function/module
 app = Flask(__name__)
 UPLOAD_FOLDER = 'Data'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+output_dir = "static/eda"
+os.makedirs(output_dir, exist_ok=True)  # Ensure output directory exists
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
